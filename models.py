@@ -38,16 +38,24 @@ def main():
     if not test_model.table_exists(cur, "users"):
         user(cur)
     else:
-        if test_model.table_exists(cursor, "users"):
+        if test_model.table_exists(cur, "users"):
             print("Users Exists.")
 
-    # Create Accounts table. 
+    # Create Accounts table.
     if not test_model.table_exists(cur, "accounts"):
         account(cur)
     else:
-        if test_model.table_exists(cursor, "accounts"):
+        if test_model.table_exists(cur, "accounts"):
             print("Accounts Exists.")
 
+    # Create Transactions table.
+    if not test_model.table_exists(cur, "accounts"):
+        account(cur)
+    else:
+        if test_model.table_exists(cur, "accounts"):
+            print("Accounts Exists.")
+
+    # Close Connection.
     if conn:
         conn.close()
     return
