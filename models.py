@@ -5,7 +5,7 @@ import test_model
 def user(cursor):
     # A user has many accounts
     # CREATE TABLE USER (account_id int NOT NULL, first_name varchar(100), last_name var_char(100), SSN, varchar(9), PRIMARY KEY(account_id))
-    cursor.execute("""CREATE TABLE users (account_id int NOT NULL, first_name CHAR(100), last_name CHAR(100), SSN CHAR(9), PRIMARY KEY(account_id));""")
+    cursor.execute("""CREATE TABLE users (account_id int NOT NULL AUTO_INCREMENT, first_name CHAR(100), last_name CHAR(100), SSN CHAR(9), PRIMARY KEY(account_id));""")
     return
 
 
