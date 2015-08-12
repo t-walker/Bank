@@ -27,7 +27,7 @@ def transaction(cursor):
 
 
 def main():
-
+    # Connect to the database.
     try:
         conn = sql.connect('bank.db')
         cur = conn.cursor()
