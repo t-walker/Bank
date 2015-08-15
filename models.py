@@ -5,7 +5,12 @@ import seed
 def user(cursor):
     # A user has many accounts
     # CREATE TABLE USER (account_id int NOT NULL, first_name varchar(100), last_name var_char(100), SSN, varchar(9), PRIMARY KEY(account_id))
-    cursor.execute("""CREATE TABLE users (user_id INTEGER PRIMARY KEY AUTOINCREMENT, first_name VARCHAR(100), last_name VARCHAR(100), SSN VARCHAR(11));""")
+    cursor.execute("""CREATE TABLE users (
+                      user_id INT NOT NULL,
+                      first_name VARCHAR(100),
+                      last_name VARCHAR(100),
+                      SSN VARCHAR(11),
+                      PRIMARY KEY(user_id));""")
     if test_model.table_exists(cursor, "users"):
         print("Users Exists.")
     return
@@ -15,7 +20,12 @@ def account(cursor):
     # An account belongs to a user
     # An account has many transactions
 
-    cursor.execute("""CREATE TABLE accounts (account_id INTEGER PRIMARY KEY, user_id INTEGER, nickname CHAR(100), interest_rate DECIMAL(10,5));""")
+    cursor.execute("""CREATE TABLE accounts (account_id INT,
+                                             nickname VARCHAR(100),
+                                             interest_rate DECIMAL(10,5),
+                                             amount DECIMAL(30,2),
+                                             user_id INT REFERENCES USERS(user_id),
+                                             PRIMARY KEY(account_id));""")
     if test_model.table_exists(cursor, "accounts"):
         print("Accounts Exists.")
     return
