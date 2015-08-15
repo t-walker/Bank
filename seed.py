@@ -52,10 +52,10 @@ def accounts_seed(cursor):
         nickname_c = "Checking"
         nickname_s = "Saving"
         user_id = u_id
-        amount = random.randint(0,10000)
+        amount = 0
         values = (a_id_c, nickname_c, 0.0, amount, u_id)
         cursor.execute('INSERT INTO accounts(account_id, nickname, interest_rate, amount, user_id) VALUES (?,?,?,?,?)', values)
-        amount = random.randint(0,10000)
+        amount = 0
         values = (a_id_s, nickname_s, 0.0, amount, u_id)
         cursor.execute('INSERT INTO accounts(account_id, nickname, interest_rate, amount, user_id) VALUES (?,?,?,?,?)', values)
 
