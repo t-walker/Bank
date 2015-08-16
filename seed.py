@@ -19,9 +19,13 @@ def drop_table(cursor, table):
 
 
 def users_seed(cursor):
-    cursor.execute("DELETE FROM users")
+    # user_id INT NOT NULL
+    # first_name VARCHAR(100)
+    # last_name VARCHAR(100)
+    # SSN VARCHAR(11)
+    cursor.execute("DELETE FROM users") #CLEAR THE TABLE OF ALL USERS
     people = []
-    user_id = 11111111
+    user_id = 11111111 # Starting USER ID
     for i in range(1000):
         first_name = first_names[random.randint(0,len(first_names) - 1)] # Random First Name
         last_name  = last_names[random.randint(0,len(last_names) - 1 )]   # Random Last Name
@@ -32,11 +36,16 @@ def users_seed(cursor):
         SSN = SSN_print(SSN)
         people.append((user_id, first_name, last_name, SSN))
 
-    cursor.executemany('INSERT INTO users(user_id, first_name,last_name,SSN) VALUES (?,?,?,?)', people)
+    cursor.executemany('INSERT INTO users(user_id, first_name,last_name,SSN) VALUES (?,?,?,?)', people) # INSERT INTO DB
     return
 
 
 def accounts_seed(cursor):
+    # account_id INT
+    # nickname VARCHAR(100)
+    # interest_rate DECIMAL(10,5)
+    # amount DECIMAL(30,2)
+    # user_id INT REFERENCES USERS(user_id),
     user_ids = []
     account_id = 1111
     cursor.execute("DELETE FROM accounts")
@@ -63,6 +72,21 @@ def accounts_seed(cursor):
 
 
 def transactions_seed():
+    # transaction_id INT,
+    # vendor VARCHAR(100),
+    # amount DECIMAL(10,5),
+    # sign BOOLEAN,
+    # account_id INT REFERENCES accounts(account_id),
+    # user_id INT REFERENCES users(user_id)
+    cursor.execute("SELECT user_id FROM users;")
+    ids = cursor.fetchall()
+    transaction_id = 1111111111111
+    for i in ids:
+        t_id = transaction_id
+        transaction_id += 1
+        amount = random.getrandint(1,1000)
+        sign
+        cursor.execute("INSERT INTO transactions where user_id = %s VALUES(?,?,?,?)")
     return
 
 
