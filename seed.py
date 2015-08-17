@@ -85,7 +85,7 @@ def transactions_seed():
         t_id = transaction_id
         transaction_id += 1
         amount = random.getrandint(1,1000)
-        sign
+        sign = 1
         cursor.execute("INSERT INTO transactions where user_id = %s VALUES(?,?,?,?)")
     return
 
