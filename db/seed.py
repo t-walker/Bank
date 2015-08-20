@@ -1,5 +1,5 @@
-import random
-import sqlite3 as sql
+import random         # Random Numbers
+import sqlite3 as sql # SQL Connection
 
 first_names = ["Tyler", "Jason", "James", "Alice", "Walter", "Grace", "Ada",
                "Erin", "Jacob", "Des", "Heather", "Henry", "Beth", "Emily", "Joe"]
