@@ -34,6 +34,17 @@ def account(cursor):
         print("Accounts Exists.")
     return
 
+def card(cursor):
+    # A transaction belongs to an account
+    cursor.execute("""CREATE TABLE transactions (
+                                                 card_id INT,
+                                                 vendor VARCHAR(100),
+                                                 account_id INT REFERENCES accounts(account_id),
+                                                 user_id INT REFERENCES users(user_id),
+                                                 PRIMARY KEY(transaction_id));""")
+    if table_exists(cursor, "transactions"):
+        print("Transactions Exists.")
+
 
 def transaction(cursor):
     # A transaction belongs to an account
