@@ -1,5 +1,4 @@
 import random         # Random Numbers
-import sqlite3 as sql # SQL Connection
 
 first_names = ["Tyler", "Jason", "James", "Alice", "Walter", "Grace", "Ada",
                "Erin", "Jacob", "Des", "Heather", "Henry", "Beth", "Emily", "Joe"]
@@ -36,7 +35,7 @@ def users_seed(cursor):
         SSN = SSN_print(SSN)
         people.append((user_id, first_name, last_name, SSN))
 
-    cursor.executemany('INSERT INTO users(user_id, first_name,last_name,SSN) VALUES (?,?,?,?)', people) # INSERT INTO DB
+    cursor.executemany('INSERT INTO users(user_id, first_name,last_name,SSN) VALUES (%s,%s,%s,%s)', people) # INSERT INTO DB
     return
 
 
@@ -63,15 +62,15 @@ def accounts_seed(cursor):
         user_id = u_id
         amount = 0
         values = (a_id_c, nickname_c, 0.0, amount, u_id)
-        cursor.execute('INSERT INTO accounts(account_id, nickname, interest_rate, amount, user_id) VALUES (?,?,?,?,?)', values)
+        cursor.execute('INSERT INTO accounts(account_id, nickname, interest_rate, amount, user_id) VALUES (%s,%s,%s,%s,%s)', values)
         amount = 0
         values = (a_id_s, nickname_s, 0.0, amount, u_id)
-        cursor.execute('INSERT INTO accounts(account_id, nickname, interest_rate, amount, user_id) VALUES (?,?,?,?,?)', values)
+        cursor.execute('INSERT INTO accounts(account_id, nickname, interest_rate, amount, user_id) VALUES (%s,%s,%s,%s,%s)', values)
 
     return
 
 
-def transactions_seed():
+def transactions_seed(cursor):
     # transaction_id INT,
     # vendor VARCHAR(100),
     # amount DECIMAL(10,5),
@@ -86,23 +85,11 @@ def transactions_seed():
         transaction_id += 1
         amount = random.getrandint(1,1000)
         sign = 1
-        cursor.execute("INSERT INTO transactions where user_id = %s VALUES(?,?,?,?)")
+        cursor.execute("INSERT INTO transactions where user_id = %s VALUES(%s,%s,%s,%s)")
     return
 
 
-def main():
-    try:
-        conn = sql.connect('bank.db')
-        cur = conn.cursor()
-    except:
-        print("Can't connect to the database.")
-
-    users_seed(cur)
-    accounts_seed(cur)
-    conn.commit()
-    if conn:
-        conn.close()
+def seed_data(cursor):
+    users_seed(cursor)
+    accounts_seed(cursor)
     return
-
-if __name__ == "__main__":
-    main()
