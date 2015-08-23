@@ -36,14 +36,14 @@ def account(cursor):
 
 def card(cursor):
     # A transaction belongs to an account
-    cursor.execute("""CREATE TABLE transactions (
+    cursor.execute("""CREATE TABLE cards (
                                                  card_id INT,
                                                  vendor VARCHAR(100),
                                                  account_id INT REFERENCES accounts(account_id),
                                                  user_id INT REFERENCES users(user_id),
                                                  PRIMARY KEY(transaction_id));""")
-    if table_exists(cursor, "transactions"):
-        print("Transactions Exists.")
+    if table_exists(cursor, "cards"):
+        print("Cards Exists.")
 
 
 def transaction(cursor):
@@ -76,10 +76,18 @@ def create_models(cursor):
         if table_exists(cursor, "accounts"):
             print("Accounts Exists.")
 
-    # Create Accounts table.
+    # Create Transactions table.
     if not table_exists(cursor, "transactions"):
         transaction(cursor)
     else:
         if table_exists(cursor, "transactions"):
             print("Transactions Exists.")
+
+    # Create Transactions table.
+    if not table_exists(cursor, "cards"):
+        transaction(cursor)
+    else:
+        if table_exists(cursor, "cards"):
+            print("Cards Exists.")
+
     return
