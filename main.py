@@ -27,6 +27,7 @@ def main():
     models.create_models(cursor)
     seed.seed_data(cursor)
     connection.commit()
+
     connection.kill()
     return
 
