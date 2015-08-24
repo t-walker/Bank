@@ -1,7 +1,8 @@
 def table_exists(cursor, table_name):
     try:
         cursor.execute("SELECT * from %s" % table_name)
-    except:
+    except error as e:
+        print(e)
         return 0
     return 1
 
@@ -13,7 +14,7 @@ def user(cursor):
                                           first_name VARCHAR(100),
                                           last_name VARCHAR(100),
                                           SSN VARCHAR(11),
-                                          PRIMARY KEY(user_id);""")
+                                          PRIMARY KEY(user_id));""")
     if table_exists(cursor, "users"):
         print("Users Exists.")
     return
@@ -22,7 +23,6 @@ def user(cursor):
 def account(cursor):
     # An account belongs to a user
     # An account has many transactions
-
     cursor.execute("""CREATE TABLE accounts (
                                              account_id INT,
                                              nickname VARCHAR(100),
@@ -34,20 +34,9 @@ def account(cursor):
         print("Accounts Exists.")
     return
 
-def card(cursor):
-    # A transaction belongs to an account
-    cursor.execute("""CREATE TABLE cards (
-                                                 card_id INT,
-                                                 vendor VARCHAR(100),
-                                                 account_id INT REFERENCES accounts(account_id),
-                                                 user_id INT REFERENCES users(user_id),
-                                                 PRIMARY KEY(transaction_id));""")
-    if table_exists(cursor, "cards"):
-        print("Cards Exists.")
-
-
 def transaction(cursor):
     # A transaction belongs to an account
+    # A transaction belongs to a card
     cursor.execute("""CREATE TABLE transactions (
                                                  transaction_id INT,
                                                  vendor VARCHAR(100),
@@ -55,11 +44,25 @@ def transaction(cursor):
                                                  sign BOOLEAN,
                                                  account_id INT REFERENCES accounts(account_id),
                                                  user_id INT REFERENCES users(user_id),
+                                                 card_id INT REFERENCES cards(card_id),
                                                  PRIMARY KEY(transaction_id));""")
     if table_exists(cursor, "transactions"):
         print("Transactions Exists.")
     return
 
+def card(cursor):
+    # A transaction belongs to an account
+    cursor.execute("""CREATE TABLE cards (
+                                                 card_id INT,
+                                                 name VARCHAR(100),
+                                                 pin INT(4),
+                                                 conf INT(3),
+                                                 account_id INT REFERENCES accounts(account_id),
+                                                 user_id INT REFERENCES users(user_id),
+                                                 PRIMARY KEY(card_id));""")
+    if table_exists(cursor, "cards"):
+        print("Cards Exists.")
+    return
 
 def create_models(cursor):
     # Create Users table.
@@ -83,11 +86,10 @@ def create_models(cursor):
         if table_exists(cursor, "transactions"):
             print("Transactions Exists.")
 
-    # Create Transactions table.
+    # Create Cards table.
     if not table_exists(cursor, "cards"):
-        transaction(cursor)
+        card(cursor)
     else:
         if table_exists(cursor, "cards"):
             print("Cards Exists.")
-
     return
