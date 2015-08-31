@@ -92,4 +92,5 @@ def transactions_seed(cursor):
 def seed_data(cursor):
     users_seed(cursor)
     accounts_seed(cursor)
+    transactions_seed()
     return

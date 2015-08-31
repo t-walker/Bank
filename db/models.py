@@ -1,8 +1,8 @@
 def table_exists(cursor, table_name):
     try:
         cursor.execute("SELECT * from %s" % table_name)
-    except error as e:
-        print(e)
+    except:
+        print("Error!")
         return 0
     return 1
 
